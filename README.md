@@ -1,6 +1,6 @@
 # OpenSCAD threads.scad module
 
-<p align="center"><img alt="Thread demo image" src="./photos/threads_demo.png"></p>
+<p align="center"><img alt="Thread demo image" src="./images/threads_demo.png"></p>
 
 This is an efficient OpenSCAD threading library intended primarily to be used
 as a component in other designs.  It supports metric compatible internal and
