@@ -346,6 +346,7 @@ module AugerThread(outer_diam, inner_diam, height, pitch, tooth_angle=30, tolera
 // default.
 module ScrewHole(outer_diam, height, position=[0,0,0], rotation=[0,0,0], pitch=0, tooth_angle=30, tolerance=0.4, tooth_height=0) {
   extra_height = 0.001 * height;
+  pitch = (pitch==0) ? ThreadPitch(outer_diam) : pitch;
 
   difference() {
     children();
