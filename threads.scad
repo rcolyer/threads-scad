@@ -7,7 +7,7 @@
 // v2.1
 
 
-screw_resolution = 0.2;  // in mm
+screw_resolution = $fs;  // in mm
 
 
 // Provides standard metric thread pitches.
