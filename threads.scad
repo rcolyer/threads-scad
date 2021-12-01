@@ -362,7 +362,7 @@ module ScrewHole(outer_diam, height, position=[0,0,0], rotation=[0,0,0], pitch=0
 module AugerHole(outer_diam, inner_diam, height, pitch, position=[0,0,0], rotation=[0,0,0], tooth_angle=30, tolerance=0.4) {
   tooth_height = tan(tooth_angle)*(outer_diam-inner_diam);
   ScrewHole(outer_diam, height, position, rotation, pitch, tooth_angle,
-    tolerance, tooth_height=tooth_height);
+    tolerance, tooth_height=tooth_height) children();
 }
 
 
