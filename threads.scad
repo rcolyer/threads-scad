@@ -165,7 +165,7 @@ function NutThickness(diameter) =
       [64, 51]
     ]) :
     diameter * 51 / 64;
-  
+
 
 // This generates a closed polyhedron from an array of arrays of points,
 // with each inner array tracing out one loop outlining the polyhedron.
@@ -314,7 +314,7 @@ module ScrewThread(outer_diam, height, pitch=0, tooth_angle=30, tolerance=0.4, t
             ht_w = h - tip_wstart,
             hf_w_t = ht_w/tip_height_w,
             hf_w = (hf_w_t < 0) ? 0 : ((hf_w_t > 1) ? 1 : hf_w_t),
-          
+
             ext_tip = (h <= tip_wstart) ? extent : (1-hf_w) * extent,
             wnormal = tooth_width(ang, h, pitch, tooth_height, ext_tip),
             w = (h <= tip_wstart) ? wnormal :
@@ -337,7 +337,7 @@ module ScrewThread(outer_diam, height, pitch=0, tooth_angle=30, tolerance=0.4, t
 // threads.
 module AugerThread(outer_diam, inner_diam, height, pitch, tooth_angle=30, tolerance=0.4, tip_height=0, tip_min_fract=0) {
   tooth_height = tan(tooth_angle)*(outer_diam-inner_diam);
-	ScrewThread(outer_diam, height, pitch, tooth_angle, tolerance, tip_height,
+  ScrewThread(outer_diam, height, pitch, tooth_angle, tolerance, tip_height,
     tooth_height, tip_min_fract);
 }
 
@@ -439,24 +439,24 @@ module PhillipsTip(width=7, thickness=0, straightdepth=0, position=[0,0,0], rota
   height = straightdepth + angledepth;
   extra_height = 0.001 * height;
 
-	difference() {
-		children();
-		translate(position)
-			rotate(rotation)
-			union() {
-				hull() {
-					translate([-width/2, -thickness/2, -extra_height/2])
-						cube([width, thickness, straightdepth+extra_height]);
-					translate([-thickness/2, -thickness/2, height-extra_height])
-						cube([thickness, thickness, extra_height]);
-				}
-				hull() {
-					translate([-thickness/2, -width/2, -extra_height/2])
-						cube([thickness, width, straightdepth+extra_height]);
-					translate([-thickness/2, -thickness/2, height-extra_height])
-						cube([thickness, thickness, extra_height]);
-				}
-			}
+  difference() {
+    children();
+    translate(position)
+      rotate(rotation)
+      union() {
+        hull() {
+          translate([-width/2, -thickness/2, -extra_height/2])
+            cube([width, thickness, straightdepth+extra_height]);
+          translate([-thickness/2, -thickness/2, height-extra_height])
+            cube([thickness, thickness, extra_height]);
+        }
+        hull() {
+          translate([-thickness/2, -width/2, -extra_height/2])
+            cube([thickness, width, straightdepth+extra_height]);
+          translate([-thickness/2, -thickness/2, height-extra_height])
+            cube([thickness, thickness, extra_height]);
+        }
+      }
   }
 }
 
@@ -503,13 +503,13 @@ module MetricWoodScrew(diameter, length, tolerance=0.4) {
   drive_tolerance = pow(3*tolerance/CountersunkDriveAcrossCorners(diameter),2)
     + 0.75*tolerance;
 
-	PhillipsTip(diameter-2)
+  PhillipsTip(diameter-2)
     union() {
       cylinder(h=diameter/2, r1=diameter, r2=diameter/2, $fn=24*diameter);
 
       translate([0,0,diameter/2-0.01])
         ScrewThread(diameter, length-diameter/2+0.01, tolerance=tolerance,
-	    		tip_height=diameter);
+          tip_height=diameter);
     }
 }
 
@@ -537,7 +537,7 @@ module RodStart(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0) {
   thread_diam = (thread_diam==0) ? 0.75*diameter : thread_diam;
   thread_len = (thread_len==0) ? 0.5*diameter : thread_len;
   thread_pitch = (thread_pitch==0) ? ThreadPitch(thread_diam) : thread_pitch;
-    
+
   cylinder(r=diameter/2, h=height, $fn=24*diameter);
 
   translate([0, 0, height])
@@ -565,7 +565,7 @@ module RodExtender(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0
   thread_diam = (thread_diam==0) ? 0.75*diameter : thread_diam;
   thread_len = (thread_len==0) ? 0.5*diameter : thread_len;
   thread_pitch = (thread_pitch==0) ? ThreadPitch(thread_diam) : thread_pitch;
-  
+
   max_bridge = height - thread_len;
   // Use 60 degree slope if it will fit.
   bridge_height = ((thread_diam/4) < max_bridge) ? thread_diam/4 : max_bridge;
@@ -574,7 +574,7 @@ module RodExtender(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0
     union() {
       ScrewHole(thread_diam, thread_len, pitch=thread_pitch)
         cylinder(r=diameter/2, h=height, $fn=24*diameter);
-  
+
       translate([0,0,height])
         ScrewThread(thread_diam, thread_len, pitch=thread_pitch,
           tip_height=thread_pitch, tip_min_fract=0.75);
