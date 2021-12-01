@@ -66,6 +66,10 @@ module MetricBolt(diameter, length, tolerance=0.4)
 // In compliance with convention, the length for this includes the head.
 module MetricCountersunkBolt(diameter, length, tolerance=0.4)
 
+// Create a standard sized metric countersunk (flat) bolt with hex key drive.
+// In compliance with convention, the length for this includes the head.
+module MetricWoodScrew(diameter, length, tolerance=0.4)
+
 // Create a standard sized metric hex nut.
 module MetricNut(diameter, thickness=0, tolerance=0.4)
 
