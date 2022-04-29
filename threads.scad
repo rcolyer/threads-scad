@@ -223,7 +223,7 @@ module ClosePoints(pointarrays) {
   ];
   faces = concat(faces_bot, faces_loop, faces_top);
 
-  polyhedron(points=points, faces=faces);
+  polyhedron(points=points, faces=faces, convexity=2);
 }
 
 
