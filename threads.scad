@@ -7,7 +7,7 @@
 // v2.1
 
 
-screw_resolution = $fs;  // in mm
+default_screw_resolution = 2; // in mm; override by setting $screw_resolution
 
 
 // Provides standard metric thread pitches.
@@ -231,6 +231,7 @@ module ClosePoints(pointarrays) {
 // This creates a vertical rod at the origin with external threads.  It uses
 // metric standards by default.
 module ScrewThread(outer_diam, height, pitch=0, tooth_angle=30, tolerance=0.4, tip_height=0, tooth_height=0, tip_min_fract=0) {
+  screw_resolution = is_undef($screw_resolution) ? default_screw_resolution : $screw_resolution;
 
   pitch = (pitch==0) ? ThreadPitch(outer_diam) : pitch;
   tooth_height = (tooth_height==0) ? pitch : tooth_height;
@@ -627,6 +628,19 @@ module Demo() {
 }
 
 
-Demo();
+module ThreadCheck() {
+  d=5;
+  h=10;
+  intersection() {
+    union() {
+      ScrewThread(d, h);
+      ScrewHole(d, h)
+      cylinder(d=h,h=h);
+    }
+    cube(h);
+  }
+}
 
-//MetricBoltSet(6, 8, 10);
+
+//Demo();
+ThreadCheck();
