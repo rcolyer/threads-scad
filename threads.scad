@@ -7,7 +7,7 @@
 // v2.1.1
 
 
-default_screw_resolution = 2; // in mm; override by setting $screw_resolution
+default_screw_resolution = 0.2; // in mm; override by setting $screw_resolution
 
 
 // Provides standard metric thread pitches.
