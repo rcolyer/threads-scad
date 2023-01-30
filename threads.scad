@@ -348,7 +348,7 @@ module ScrewHole(outer_diam, height, position=[0,0,0], rotation=[0,0,0], pitch=0
   extra_height = 0.001 * height;
 
   difference() {
-    children();
+    if ($children) children();
     translate(position)
       rotate(rotation)
       translate([0, 0, -extra_height/2])
