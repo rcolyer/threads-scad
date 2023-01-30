@@ -31,7 +31,8 @@ module ScrewThread(outer_diam, height, pitch=0, tooth_angle=30, tolerance=0.4, t
 module AugerThread(outer_diam, inner_diam, height, pitch, tooth_angle=30, tolerance=0.4, tip_height=0, tip_min_fract=0)
 
 // This creates a threaded hole in its children using metric standards by
-// default.
+// default. If called without children, it creates an object suitable for
+// use with difference().
 module ScrewHole(outer_diam, height, position=[0,0,0], rotation=[0,0,0], pitch=0, tooth_angle=30, tolerance=0.4, tooth_height=0)
 
 // This creates an auger-style threaded hole in its children.
