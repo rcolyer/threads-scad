@@ -231,6 +231,8 @@ module ClosePoints(pointarrays) {
 // This creates a vertical rod at the origin with external threads.  It uses
 // metric standards by default.
 module ScrewThread(outer_diam, height, pitch=0, tooth_angle=30, tolerance=0.4, tip_height=0, tooth_height=0, tip_min_fract=0) {
+  assert(is_num(outer_diam), "ScrewThread outer_diam parameter must be a number");
+  assert(is_num(height), "ScrewThread height parameter must be a number");
 
   pitch = (pitch==0) ? ThreadPitch(outer_diam) : pitch;
   tooth_height = (tooth_height==0) ? pitch : tooth_height;
@@ -336,6 +338,9 @@ module ScrewThread(outer_diam, height, pitch=0, tooth_angle=30, tolerance=0.4, t
 // This creates a vertical rod at the origin with external auger-style
 // threads.
 module AugerThread(outer_diam, inner_diam, height, pitch, tooth_angle=30, tolerance=0.4, tip_height=0, tip_min_fract=0) {
+  assert(is_num(outer_diam), "AugerThread outer_diam parameter must be a number");
+  assert(is_num(height), "AugerThread height parameter must be a number");
+
   tooth_height = tan(tooth_angle)*(outer_diam-inner_diam);
   ScrewThread(outer_diam, height, pitch, tooth_angle, tolerance, tip_height,
     tooth_height, tip_min_fract);
@@ -345,6 +350,9 @@ module AugerThread(outer_diam, inner_diam, height, pitch, tooth_angle=30, tolera
 // This creates a threaded hole in its children using metric standards by
 // default.
 module ScrewHole(outer_diam, height, position=[0,0,0], rotation=[0,0,0], pitch=0, tooth_angle=30, tolerance=0.4, tooth_height=0) {
+  assert(is_num(outer_diam), "ScrewHole outer_diam parameter must be a number");
+  assert(is_num(height), "ScrewHole height parameter must be a number");
+
   extra_height = 0.001 * height;
 
   difference() {
@@ -360,6 +368,10 @@ module ScrewHole(outer_diam, height, position=[0,0,0], rotation=[0,0,0], pitch=0
 
 // This creates an auger-style threaded hole in its children.
 module AugerHole(outer_diam, inner_diam, height, pitch, position=[0,0,0], rotation=[0,0,0], tooth_angle=30, tolerance=0.4) {
+  assert(is_num(outer_diam), "AugerHole outer_diam parameter must be a number");
+  assert(is_num(inner_diam), "AugerHole inner_diam parameter must be a number");
+  assert(is_num(height), "AugerHole height parameter must be a number");
+
   tooth_height = tan(tooth_angle)*(outer_diam-inner_diam);
   ScrewHole(outer_diam, height, position, rotation, pitch, tooth_angle,
     tolerance, tooth_height=tooth_height) children();
@@ -370,6 +382,9 @@ module AugerHole(outer_diam, inner_diam, height, pitch, position=[0,0,0], rotati
 // The rotation vector is applied first, then the position translation,
 // starting from a position upward from the z-axis at z=0.
 module ClearanceHole(diameter, height, position=[0,0,0], rotation=[0,0,0], tolerance=0.4) {
+  assert(is_num(diameter), "ClearanceHole diameter parameter must be a number");
+  assert(is_num(height), "ClearanceHole height parameter must be a number");
+
   extra_height = 0.001 * height;
 
   difference() {
@@ -387,6 +402,9 @@ module ClearanceHole(diameter, height, position=[0,0,0], rotation=[0,0,0], toler
 // starting from a position upward from the z-axis at z=0.  The default
 // recessed parameters fit a standard metric bolt.
 module RecessedClearanceHole(diameter, height, position=[0,0,0], rotation=[0,0,0], recessed_diam=-1, recessed_height=-1, tolerance=0.4) {
+  assert(is_num(diameter), "RecessedClearanceHole diameter parameter must be a number");
+  assert(is_num(height), "RecessedClearanceHole height parameter must be a number");
+
   recessed_diam = (recessed_diam < 0) ?
     HexAcrossCorners(diameter) : recessed_diam;
   recessed_height = (recessed_height < 0) ? diameter : recessed_height;
@@ -412,6 +430,9 @@ module RecessedClearanceHole(diameter, height, position=[0,0,0], rotation=[0,0,0
 // starting from a position upward from the z-axis at z=0.
 // The countersunk side is on the bottom by default.
 module CountersunkClearanceHole(diameter, height, position=[0,0,0], rotation=[0,0,0], sinkdiam=0, sinkangle=45, tolerance=0.4) {
+  assert(is_num(diameter), "CountersunkClearanceHole diameter parameter must be a number");
+  assert(is_num(height), "CountersunkClearanceHole height parameter must be a number");
+
   extra_height = 0.001 * height;
   sinkdiam = (sinkdiam==0) ? 2*diameter : sinkdiam;
   sinkheight = ((sinkdiam-diameter)/2)/tan(sinkangle);
@@ -464,6 +485,9 @@ module PhillipsTip(width=7, thickness=0, straightdepth=0, position=[0,0,0], rota
 
 // Create a standard sized metric bolt with hex head and hex key.
 module MetricBolt(diameter, length, tolerance=0.4) {
+  assert(is_num(diameter), "MetricBolt diameter parameter must be a number");
+  assert(is_num(length), "MetricBolt length parameter must be a number");
+
   drive_tolerance = pow(3*tolerance/HexDriveAcrossCorners(diameter),2)
     + 0.75*tolerance;
 
@@ -482,6 +506,9 @@ module MetricBolt(diameter, length, tolerance=0.4) {
 // Create a standard sized metric countersunk (flat) bolt with hex key drive.
 // In compliance with convention, the length for this includes the head.
 module MetricCountersunkBolt(diameter, length, tolerance=0.4) {
+  assert(is_num(diameter), "MetricCountersunkBolt diameter parameter must be a number");
+  assert(is_num(length), "MetricCountersunkBolt length parameter must be a number");
+
   drive_tolerance = pow(3*tolerance/CountersunkDriveAcrossCorners(diameter),2)
     + 0.75*tolerance;
 
@@ -500,6 +527,9 @@ module MetricCountersunkBolt(diameter, length, tolerance=0.4) {
 // Create a standard sized metric countersunk (flat) bolt with hex key drive.
 // In compliance with convention, the length for this includes the head.
 module MetricWoodScrew(diameter, length, tolerance=0.4) {
+  assert(is_num(diameter), "MetricWoodScrew diameter parameter must be a number");
+  assert(is_num(length), "MetricWoodScrew length parameter must be a number");
+
   drive_tolerance = pow(3*tolerance/CountersunkDriveAcrossCorners(diameter),2)
     + 0.75*tolerance;
 
@@ -516,6 +546,8 @@ module MetricWoodScrew(diameter, length, tolerance=0.4) {
 
 // Create a standard sized metric hex nut.
 module MetricNut(diameter, thickness=0, tolerance=0.4) {
+  assert(is_num(diameter), "MetricNut diameter parameter must be a number");
+
   thickness = (thickness==0) ? NutThickness(diameter) : thickness;
   ScrewHole(diameter, thickness, tolerance=tolerance)
     cylinder(h=thickness, r=HexAcrossCorners(diameter)/2-0.5*tolerance, $fn=6);
@@ -524,6 +556,8 @@ module MetricNut(diameter, thickness=0, tolerance=0.4) {
 
 // Create a convenient washer size for a metric nominal thread diameter.
 module MetricWasher(diameter) {
+  assert(is_num(diameter), "MetricWasher diameter parameter must be a number");
+
   difference() {
     cylinder(h=diameter/5, r=1.15*diameter, $fn=24*diameter);
     cylinder(h=2*diameter, r=0.575*diameter, $fn=12*diameter, center=true);
@@ -533,6 +567,9 @@ module MetricWasher(diameter) {
 
 // Solid rod on the bottom, external threads on the top.
 module RodStart(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0) {
+  assert(is_num(diameter), "RodStart diameter parameter must be a number");
+  assert(is_num(height), "RodStart height parameter must be a number");
+
   // A reasonable default.
   thread_diam = (thread_diam==0) ? 0.75*diameter : thread_diam;
   thread_len = (thread_len==0) ? 0.5*diameter : thread_len;
@@ -549,6 +586,9 @@ module RodStart(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0) {
 // Solid rod on the bottom, internal threads on the top.
 // Flips around x-axis after printing to pair with RodStart.
 module RodEnd(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0) {
+  assert(is_num(diameter), "RodEnd diameter parameter must be a number");
+  assert(is_num(height), "RodEnd height parameter must be a number");
+
   // A reasonable default.
   thread_diam = (thread_diam==0) ? 0.75*diameter : thread_diam;
   thread_len = (thread_len==0) ? 0.5*diameter : thread_len;
@@ -561,6 +601,9 @@ module RodEnd(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0) {
 
 // Internal threads on the bottom, external threads on the top.
 module RodExtender(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0) {
+  assert(is_num(diameter), "RodExtender diameter parameter must be a number");
+  assert(is_num(height), "RodExtender height parameter must be a number");
+
   // A reasonable default.
   thread_diam = (thread_diam==0) ? 0.75*diameter : thread_diam;
   thread_len = (thread_len==0) ? 0.5*diameter : thread_len;
@@ -588,6 +631,9 @@ module RodExtender(diameter, height, thread_len=0, thread_diam=0, thread_pitch=0
 
 // Produces a matching set of metric bolts, nuts, and washers.
 module MetricBoltSet(diameter, length, quantity=1) {
+  assert(is_num(diameter), "MetricBoltSet diameter parameter must be a number");
+  assert(is_num(length), "MetricBoltSet length parameter must be a number");
+
   for (i=[0:quantity-1]) {
     translate([0, i*4*diameter, 0]) MetricBolt(diameter, length);
     translate([4*diameter, i*4*diameter, 0]) MetricNut(diameter);
